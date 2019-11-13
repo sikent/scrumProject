@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport')
-const initializePassport = require('../config/passport');
+// const passport = require('passport')
+// const initializePassport = require('../config/passport');
 
 
 
