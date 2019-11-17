@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 3000;
 const flash = require('express-flash');
 const session = require('express-session')
 const keys = require('./config/keys')
-const passport = require('passport')
+//const passport = require('passport')
 
 
 app.set('view engine', 'ejs')
@@ -14,7 +14,6 @@ app.use(session({
     secret: keys.secret,
     resave: false,
     saveUninitialized: false,
-
 }))
 // app.use(passport.initialize());
 // app.use(passport.session())
