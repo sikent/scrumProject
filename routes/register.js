@@ -2,14 +2,15 @@ const express = require('express');
 const router  = express.Router();
 const keys = require('../config/keys');
 const MongoClient = require('mongodb').MongoClient;
-
+const bcrypt = require('bcrypt');
+let hashedPassword 
 
 router.get('/', (req, res) =>{
     res.render('register', {err: "None"});
     console.log(req.connection.remoteAddress)
 
 })
-router.post('/', (req, res)=>{
+router.post('/', async(req, res)=>{
      const User ={   
         email: req.body.email,
         username : req.body.username,
@@ -20,8 +21,14 @@ router.post('/', (req, res)=>{
 
     if(User.password1 != User.password2){
         res.render('register', {err : "Passwords don't match"})
-    }
+    }else{
+       try {
+         hashedPassword = await bcrypt.hash(User.password2, keys.SaltRounds);
+       } catch (error) {
+           console.log(error);
+       }
 
+    }
     MongoClient.connect(keys.URI, (err, client)=>{
         if(err) throw err;
         const db = client.db(keys.userDB);
@@ -31,7 +38,7 @@ router.post('/', (req, res)=>{
             const collection = db.collection(User.username);
             // Insert some document
             collection.insertOne(
-              {username : User.username, email: User.email, password: User.password2, SignUpDate: Date() }
+              {username : User.username, email: User.email, password: hashedPassword, SignUpDate: Date() }
             , function(err, result) {
               callback(result);
             });

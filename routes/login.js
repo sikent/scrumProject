@@ -18,4 +18,8 @@ router.post('/userLogin', (req, res)=>{
     initializePassport(passport)
 })
 
+router.get('/logout', (req, res)=>{
+    //end user session 
+    res.redirect('/login');
+})
 module.exports = router;
