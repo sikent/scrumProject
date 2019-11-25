@@ -17,7 +17,7 @@ app.use(session({
     secret: keys.secret,
     resave: false,
     saveUninitialized: false,
-    name: "sid",
+    name: keys.sessionName,
     cookie:{
         maxAge: cookieTime,
         sameSite: true,
