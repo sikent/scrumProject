@@ -3,14 +3,15 @@ const router  = express.Router();
 const keys = require('../config/keys');
 const MongoClient = require('mongodb').MongoClient;
 const bcrypt = require('bcrypt');
-let hashedPassword 
+const uuidv4 = require('uuid/v4');
+
 
 router.get('/', (req, res) =>{
     res.render('register', {err: "None"});
-    console.log(req.connection.remoteAddress)
 
 })
 router.post('/', async(req, res)=>{
+    let hashedPassword 
      const User ={   
         email: req.body.email,
         username : req.body.username,
@@ -38,7 +39,7 @@ router.post('/', async(req, res)=>{
             const collection = db.collection(User.username);
             // Insert some document
             collection.insertOne(
-              {username : User.username, email: User.email, password: hashedPassword, SignUpDate: Date() }
+              {username : User.username, email: User.email, password: hashedPassword, SignUpDate: Date(), uuid: uuidv4() }
             , function(err, result) {
               callback(result);
             });
