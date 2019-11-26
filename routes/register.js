@@ -20,9 +20,11 @@ router.post('/', async(req, res)=>{ // post for after the form has been submitte
     }
      
 
-    if(User.password1 != User.password2){ // check if the both the passwords match 
+    if(User.password1 != User.password2 ){ // check if the both the passwords match 
         return res.render('register', {err : "Passwords don't match"})
-    }else{
+    }
+    
+    else{
        try {
          hashedPassword = await bcrypt.hash(User.password2, keys.SaltRounds); // hash the password 
        } catch (error) {
