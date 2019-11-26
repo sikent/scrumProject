@@ -1,19 +1,18 @@
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3000;
-const flash = require('express-flash');
-const session = require('express-session')
-const keys = require('./config/keys')
-const morgan = require('morgan')
-const cookieTime= 1000*60*60*2
+const express = require('express'); // requiring express server framework
+const app = express(); // making an intance of express
+const PORT = process.env.PORT || 3000; // What port the server should start on
+const flash = require('express-flash'); // express-flash to send messages
+const session = require('express-session') // express-session to start sessions and set cookies for auth
+const keys = require('./config/keys') // have some configs keys 
+const morgan = require('morgan')// to see who has connected to server 
+const cookieTime= 1000*60*60*2 // when the cookie expires
 
-app.use(morgan('combined'));
-app.use(flash())
-app.set('view engine', 'ejs')
-app.use(express.static('static'))
-app.use(express.urlencoded());
-app.use(flash());
-app.use(session({
+app.use(morgan('dev')); // morgan as in dev view 
+app.use(flash()) // flash middleware to use flash
+app.set('view engine', 'ejs') // setup the view engine to ejs
+app.use(express.static('static')) // setup the static for images and css files
+app.use(express.urlencoded()); // to parse incoming form data
+app.use(session({ // session config
     secret: keys.secret,
     resave: false,
     saveUninitialized: false,
@@ -27,14 +26,14 @@ app.use(session({
     
 }))
 
-app.use('/login', require('./routes/login'))
-app.use('/register', require('./routes/register'))
-app.use('/dashboard', require('./routes/dashboard'))
-app.get('/', (req, res)=>{
+app.use('/login', require('./routes/login')) // when /login is hit it redirects to /routes/login.js file
+app.use('/register', require('./routes/register')) // when /register is hit it redirects to /routes/register.js file 
+app.use('/dashboard', require('./routes/dashboard')) // after the user has been auth in the login route it redirects to /dashboard to show the dashboard 
+app.get('/', (req, res)=>{ // basic route which asks to login or register
     res.render('index')
 })
 
-app.get('/logout', (req, res)=>{
+app.get('/logout', (req, res)=>{ // route to end session 
     req.session.destroy((err)=>{
         if(err) res.redirect('/dashboard')
     })
