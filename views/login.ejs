@@ -9,19 +9,27 @@
     
 </head>
 <body>
-    <h1>Login Page</h1>
-  
-<form action="/login/userLogin" method="post">
-<input type="text" name="username" placeholder="email" required>
-<input type="password" name="password" placeholder="Password" required>
-<button type="submit">Login</button>
-</form>
-<a href="/register">Haven't Registered Yet?</a>
-<br>
-<br>
-<%= err%>
+        <body>
+                <div class="container">  
+                    <form id="contact" action="/login/userLogin" method="post">
+                      <h3>Website Name</h3>
+                      <br>
+                      <fieldset>
+                        <input type="text" name="username" placeholder="Enter your username" required>
+                      </fieldset>
+            
+                      <fieldset>
+                        <input type="password" name="password" placeholder="Password" required>
+                      </fieldset>
 
-</body>
+            
+                      <fieldset>
+                            
+                        <button type="submit" id="contact-submit">Login</button>
+                        <a href="/register">Don't have an account?</a>
+                      </fieldset>
+                    </form>
+                  </div>
 </html>
 
 

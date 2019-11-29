@@ -10,10 +10,14 @@ const redirection = (req, res, next) =>{ // check if the session id is set
     }
 }
 
-router.get('/', redirection, (req, res) =>{
-    const User = { // make instance of the user 
-        username: req.session.username, //username 
-        uuid: req.session.uuid // id of the session 
+router.get('/', (req, res) =>{
+    // const User = { // make instance of the user 
+    //     username: req.session.username, //username 
+    //     uuid: req.session.uuid // id of the session 
+    // }
+    const User = {
+        username: "admin",
+        uuid: "312dwdw"
     }
     
     res.render('dashboard', {username: User.username}) // render the dashboard
