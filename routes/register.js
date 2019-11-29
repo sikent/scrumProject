@@ -24,6 +24,7 @@ router.post('/', async(req, res)=>{ // post for after the form has been submitte
         return res.render('register', {err : "Passwords don't match"})
     }
     
+    
     else{
        try {
          hashedPassword = await bcrypt.hash(User.password2, keys.SaltRounds); // hash the password 
